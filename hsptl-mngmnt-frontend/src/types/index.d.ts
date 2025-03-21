@@ -15,3 +15,7 @@ export type Mail = {
   smtpEmail: string;
   smtpPassword: string;
 };
+
+export interface TokenContextType {
+  sessionToken: string;
+}

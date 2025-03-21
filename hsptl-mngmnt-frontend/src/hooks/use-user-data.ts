@@ -3,11 +3,14 @@ import { getUserSessionData } from "@/app/api/users/index.c";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const useUserData = (sessionToken: string, router?: AppRouterInstance) => {
-  return useQuery({
+  const data = useQuery({
     queryKey: ["User", "Profile_Data"],
     queryFn: async () => await getUserSessionData(sessionToken, router),
-    refetchInterval: 3000,
+    refetchInterval: 2000,
   });
+
+  console.log(data.data)
+  return data
 };
 
 export default useUserData;

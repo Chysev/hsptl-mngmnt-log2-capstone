@@ -8,9 +8,13 @@ import { CreateInvoiceDTO, UpdateInvoiceDTO } from "@/validators/invoice.dto";
 const inv: ExpressRouter = Router()
 const controller = new InvoiceController()
 
-inv.route("/create").post(RequestValidator.validate(CreateInvoiceDTO), controller.CreateInvoice)
 
-inv.route("/update").post(RequestValidator.validate(UpdateInvoiceDTO), controller.UpdateInvoice)
+inv.route("/list").get(controller.getAllInvoice)
 
-inv.route("/delete/:id").post(controller.DeleteInvoice)
+inv.route("/create").post(controller.CreateInvoice)
 
+inv.route("/update").put(controller.UpdateInvoice)
+
+inv.route("/delete/:id").delete(controller.DeleteInvoice)
+
+export default inv;

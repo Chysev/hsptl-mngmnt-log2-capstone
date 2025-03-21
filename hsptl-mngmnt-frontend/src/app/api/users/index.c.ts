@@ -10,6 +10,7 @@ const getUserSessionData = async (
   sessionToken: string,
   router?: AppRouterInstance
 ) => {
+
   try {
     const response = await Axios.get("/api/v1/auth/session-token", {
       headers: {
@@ -24,7 +25,7 @@ const getUserSessionData = async (
         description: "Session Expired",
       });
       setTimeout(() => {
-        router?.push("/authorize/logout");
+        router?.push("/logout");
       }, 5000);
     }
     return new NextResponse("INTERNAL_SERVER_ERROR", { status: 500 });

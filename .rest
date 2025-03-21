@@ -1,0 +1,32 @@
+POST http://localhost:4000/api/v1/auth/register
+Content-Type: application/json
+nexus-key: "Nice"
+
+{
+    "name": "John Layda",
+    "email": "Johnlayda92@gmail.com",
+    "password": "Johnlayda@123"
+}
+
+###
+### Create Product
+POST http://localhost:4000/api/v1/product/create
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "price": 99.99,
+  "stocks": 10,
+  "account_id": "67dd03eb601c2afd9c9b01f4"
+}
+
+
+###
+DELETE http://localhost:4000/api/v1/product/delete/67dd0c8fbb526b31d80fb476
+
+###
+GET http://localhost:4000/api/v1/shipment/list
+
+
+###
+GET https://backend-finance.nodadogenhospital.com/billing/get-billings

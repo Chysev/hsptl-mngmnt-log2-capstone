@@ -144,7 +144,7 @@ const RegisterForm = () => {
             </Button>
             <div className="flex space-x-2">
               <p>Already have an account?</p>
-              <Link href="/authorize/login">
+              <Link href="/login">
                 <p className="text-green-600 font-semibold hover:text-green-400">
                   Login
                 </p>

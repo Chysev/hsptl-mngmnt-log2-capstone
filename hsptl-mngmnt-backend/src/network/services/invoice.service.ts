@@ -2,6 +2,14 @@ import prisma from "@/lib/prisma";
 import { CreateInvoiceDTO, UpdateInvoiceDTO } from "@/validators/invoice.dto";
 
 class InvoiceService {
+    public async getAllInvoice() {
+        return await prisma.invoice.findMany({
+            include: {
+                account: true
+            }
+        })
+    }
+
     public async createInvoice(data: CreateInvoiceDTO) {
         const account = await prisma.account.findUnique({
             where: { id: data.account_id }

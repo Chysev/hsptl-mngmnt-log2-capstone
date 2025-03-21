@@ -2,6 +2,11 @@ import prisma from "@/lib/prisma";
 import { CreateProductDTO, UpdateProductDTO } from "@/validators/products.dto";
 
 class ProductService {
+
+    public async getAllProducts() {
+        return await prisma.product.findMany()
+    }
+
     public async createProduct(data: CreateProductDTO) {
         const account = await prisma.account.findUnique({
             where: { id: data.account_id }
@@ -17,11 +22,11 @@ class ProductService {
                 name: data.name,
                 price: data.price,
                 stocks: data.stocks,
-                account: {
-                    connect: {
-                        id: account.id
-                    }
-                }
+                // account: {
+                //     connect: {
+                //         id: account.id
+                //     }
+                // }
             }
         })
 

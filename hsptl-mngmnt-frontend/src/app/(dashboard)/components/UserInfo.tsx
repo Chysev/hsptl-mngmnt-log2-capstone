@@ -34,7 +34,6 @@ const UserInfo = (Token: any) => {
 
       <h3 className="text-md">UpdatedAt: {user?.data?.user?.updatedAt}</h3>
 
-      <p className="text-justify">{user?.data?.user?.description}</p>
       <Badge variant="outline">{user?.data?.user.role}</Badge>
     </div>
   );

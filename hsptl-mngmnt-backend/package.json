@@ -35,6 +35,7 @@
     "prisma:studio": "npm run devEnv npx prisma studio"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "@prisma/client": "^5.18.0",
     "@prisma/extension-accelerate": "^1.1.0",
     "axios": "^1.7.2",

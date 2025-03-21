@@ -7,12 +7,23 @@ import InvoiceService from "../services/invoice.service";
 class InvoiceController extends Api {
     private readonly invoiceService = new InvoiceService();
 
+    public getAllInvoice = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const cert = await this.invoiceService.getAllInvoice()
+            this.send(res, cert, HttpStatusCode.Ok, "Create Certificate Route")
+        } catch (error) {
+            next(new HttpInternalServerError("Failed to create certificate"));
+        }
+    }
+
 
     public CreateInvoice = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const cert = await this.invoiceService.createInvoice(req.body)
+            console.log(cert)
             this.send(res, cert, HttpStatusCode.Ok, "Create Certificate Route")
         } catch (error) {
+            console.log(error)
             next(new HttpInternalServerError("Failed to create certificate"));
         }
     }

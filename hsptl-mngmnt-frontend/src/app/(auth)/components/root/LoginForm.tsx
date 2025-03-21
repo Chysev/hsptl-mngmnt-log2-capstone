@@ -145,7 +145,7 @@ const LoginForm = () => {
             </Button>
             <div className="flex space-x-2">
               <p>Don&apos;t have an account yet?</p>
-              <Link href="/authorize/register">
+              <Link href="/register">
                 <p className="text-red-600 font-semibold hover:text-red-400">
                   Register
                 </p>

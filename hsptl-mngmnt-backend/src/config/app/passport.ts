@@ -84,17 +84,6 @@ export class PassportConfig {
               name: account.name,
               email: account.email,
               role: account.role,
-              cert: {
-                id: account.cert?.id,
-                name: account.cert?.name,
-                issued_by: account.cert?.issued_by,
-                issueDate: account.cert?.issueDate,
-                document_url: account.cert?.document_url,
-                createdAt: account.cert?.createdAt,
-                updatedAt: account.cert?.updatedAt,
-                status: account.cert?.status,
-                account_id: account.cert?.account_id
-              },
               createdAt: account.createdAt,
               updatedAt: account.updatedAt,
             };

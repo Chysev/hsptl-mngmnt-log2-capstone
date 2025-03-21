@@ -12,21 +12,40 @@ model Account {
   email      String       @unique
   name       String?
   password   String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
   role       Role         @default(STAFF)
   cert       Certificate?
   products   Product[]
   orders     Orders[]
   invoice    Invoice[]    @relation(fields: [invoice_id], references: [id])
   invoice_id String[]     @db.ObjectId
+  vehicle    Vehicle[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
 model Orders {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  products   Json
-  account    Account? @relation(fields: [account_id], references: [id])
-  account_id String?  @unique @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  products     Json
+  account      Account?  @relation(fields: [account_id], references: [id])
+  destination  String
+  account_id   String?   @db.ObjectId
+  shippment    Shipment? @relation(fields: [shippment_id], references: [id])
+  shippment_id String?   @db.ObjectId
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Shipment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  orders      Orders[] @relation(fields: [], references: [])
+  orders_id   String[] @db.ObjectId
+  description String?
+  start       DateTime
+  end         DateTime
+  destination String
+  vehicle     Vehicle?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Certificate {
@@ -36,11 +55,11 @@ model Certificate {
   issueDate    DateTime
   expiryDate   DateTime?
   document_url String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
   status       CertStatus
   account      Account?   @relation(fields: [account_id], references: [id])
   account_id   String?    @unique @db.ObjectId
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Product {
@@ -48,18 +67,26 @@ model Product {
   name       String
   price      Float
   stocks     Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
   account    Account? @relation(fields: [account_id], references: [id])
   account_id String?  @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Vehicle {
-  id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  name     String?
-  plate_no String?
-  status   VehicleStatus @default(AVAILABLE)
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String?
+  driver_name  String
+  plate_no     String?
+  status       VehicleStatus @default(AVAILABLE)
+  account      Account?      @relation(fields: [account_id], references: [id])
+  account_id   String?       @unique @db.ObjectId
+  shippment    Shipment?     @relation(fields: [shippment_id], references: [id])
+  shippment_id String?       @unique @db.ObjectId
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
+
 
 model Invoice {
   id         String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -68,7 +95,10 @@ model Invoice {
   issueDate  DateTime      @default(now())
   account    Account[]     @relation(fields: [account_id], references: [id])
   account_id String[]      @db.ObjectId
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 }
+
 
 enum InvoiceStatus {
   PENDING
