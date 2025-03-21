@@ -18,7 +18,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 class index {
   public app: express.Application;
 
-  public passportConfig = new PassportConfig();
+  public passportConfig: any = new PassportConfig();
 
   constructor() {
     this.app = express();
