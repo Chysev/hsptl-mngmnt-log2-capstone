@@ -378,9 +378,8 @@ export default function VendorPage() {
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>Product Name</TableHead>
-                                        <TableHead>Category</TableHead>
-                                        <TableHead>Status</TableHead>
-                                        <TableHead>Last Order</TableHead>
+                                        <TableHead>Price</TableHead>
+                                        <TableHead>Stocks</TableHead>
                                         <TableHead>Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -401,20 +400,10 @@ export default function VendorPage() {
                                         products.map((product) => (
                                             <TableRow key={product.id}>
                                                 <TableCell className="font-medium">{product.name}</TableCell>
-                                                <TableCell>{product.category}</TableCell>
+                                                <TableCell>{product.price}</TableCell>
                                                 <TableCell>
-                                                    <Badge
-                                                        variant="outline"
-                                                        className={
-                                                            product.status === "Active"
-                                                                ? "bg-green-500/10 text-green-500 border-green-500/20"
-                                                                : "bg-yellow-500/10 text-yellow-500 border-yellow-500/20"
-                                                        }
-                                                    >
-                                                        {product.status}
-                                                    </Badge>
+                                                    {product.stocks}
                                                 </TableCell>
-                                                <TableCell>{product.lastOrder}</TableCell>
                                                 <TableCell>
                                                     <Button
                                                         variant="ghost"
