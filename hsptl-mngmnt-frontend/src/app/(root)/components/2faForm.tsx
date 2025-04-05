@@ -37,7 +37,7 @@ const TwoFactorForm = () => {
 
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/v1/auth/verify2fa`, {
+            const res = await fetch(`https://hospital_log2.chysev.cloud/api/v1/auth/verify2fa`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code: data.code, token: tempToken }),
