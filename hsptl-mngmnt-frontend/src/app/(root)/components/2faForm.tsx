@@ -74,7 +74,7 @@ const TwoFactorForm = () => {
 
 
     return (
-        <Card className="m-auto shadow-slate-100 shadow-sm rounded-lg p-5 max-w-[500px] w-full">
+        <Card className="min-h-screeng m-auto shadow-slate-100 shadow-sm rounded-lg p-5 max-w-[500px] w-full">
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <CardHeader className="items-center">
                     <CardTitle>Two-Factor Authentication</CardTitle>
