@@ -29,6 +29,6 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/app/(dashboard)/dashboard/invoice"  ],
   "exclude": ["node_modules"]
 }

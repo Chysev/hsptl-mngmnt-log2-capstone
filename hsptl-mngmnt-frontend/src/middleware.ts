@@ -30,7 +30,7 @@ export const middleware = async (req: NextRequest) => {
   const Token = req.cookies.get("sessionToken");
 
   if (pathname.startsWith("/logout")) {
-    const res = NextResponse.redirect(new URL("/login", req.url));
+    const res = NextResponse.redirect(new URL("/", req.url));
     res.cookies.delete("sessionToken");
     return res;
   }
@@ -50,7 +50,7 @@ export const middleware = async (req: NextRequest) => {
     if (userPaths.some((path) => pathname.startsWith(path))) {
       if (!Token) {
         if (error.response?.status === 401) {
-          return NextResponse.redirect(new URL("/login", req.url));
+          return NextResponse.redirect(new URL("/", req.url));
         }
       }
     }

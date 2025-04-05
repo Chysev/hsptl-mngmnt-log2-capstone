@@ -9,7 +9,6 @@ const useUserData = (sessionToken: string, router?: AppRouterInstance) => {
     refetchInterval: 2000,
   });
 
-  console.log(data.data)
   return data
 };
 

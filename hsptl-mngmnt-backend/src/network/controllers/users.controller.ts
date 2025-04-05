@@ -31,19 +31,19 @@ class UsersController extends Api {
     }
   };
 
-  // public UpdateUser = async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ) => {
-  //   try {
-  //     const { id } = req.params;
-  //     const users = await this.usersService.updateUser(id, req.body);
-  //     this.send(res, users, HttpStatusCode.Ok, "Update User Route");
-  //   } catch (error) {
-  //     next(new HttpInternalServerError("Failed to update user"));
-  //   }
-  // };
+  public UpdateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { id } = req.params;
+      const users = await this.usersService.updateUser(id, req.body);
+      this.send(res, users, HttpStatusCode.Ok, "Update User Route");
+    } catch (error) {
+      next(new HttpInternalServerError("Failed to update user"));
+    }
+  };
 
   public DeleteUser = async (
     req: Request,

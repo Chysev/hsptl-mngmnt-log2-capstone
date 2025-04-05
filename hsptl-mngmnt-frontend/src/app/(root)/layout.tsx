@@ -1,3 +1,4 @@
+import QueryProvider from "@/hooks/QueryProvider";
 import "../globals.css";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
@@ -18,7 +19,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={lato.className}>{children}</body>
+      <body className={lato.className}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 };

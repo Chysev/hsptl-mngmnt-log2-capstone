@@ -17,6 +17,8 @@ class UserService {
         email: true,
         name: true,
         createdAt: true,
+        document: true,
+        contract: true,
         role: true,
       },
     });
@@ -55,35 +57,30 @@ class UserService {
    * @throws {Error}
    */
 
-  // public async updateUser(id: string, data: UpdateUserDTO) {
-  //   const account = await prisma.account.findUnique({
-  //     where: { id: id },
-  //   });
+  public async updateUser(id: string, data: UpdateUserDTO) {
+    const account = await prisma.account.findUnique({
+      where: { id: id },
+    });
 
-  //   if (!account) {
-  //     return new HttpNotFoundError("Account not found");
-  //   }
+    if (!account) {
+      return new HttpNotFoundError("Account not found");
+    }
 
-  //   let updatedPassword = account.password;
+    let updatedPassword = account.password;
 
-  //   if (data.password) {
-  //     updatedPassword = await Bcrypt.hashPassword(data.password);
-  //   }
+    if (data.password) {
+      updatedPassword = await Bcrypt.hashPassword(data.password);
+    }
 
-  //   return await prisma.account.update({
-  //     where: {
-  //       id: id,
-  //     },
-  //     data: {
-  //       name: data.name || account.name,
-  //       email: data.email || account.email,
-  //       role: data.role || account.role,
-  //       password: updatedPassword,
-  //       description: data.description || account.description,
-  //       avatarUrl: data.avatarUrl || account.avatarUrl,
-  //     },
-  //   });
-  // }
+    return await prisma.account.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isVerfied: true
+      },
+    });
+  }
 
   /**
    * Deletes a user by their ID.

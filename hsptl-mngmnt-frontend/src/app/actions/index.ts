@@ -8,20 +8,36 @@ import { Login } from "../api/auth/index.s";
 
 const SetTokenAction = async (datas: z.infer<typeof LoginSchema>) => {
   const response = await Login(datas);
+  console.log("LOGIN RESPONSE", response);
+
 
   if (isAxiosResponse(response)) {
-    cookies().set({
-      name: "sessionToken",
-      value: response.data.sessionToken,
-      httpOnly: true,
-      secure: true,
-      path: "/",
-    });
+    const data = response.data;
 
-    return { success: true, response: response };
+    console.log(data)
+    if (data.twoFactorRequired && data.tempToken) {
+      return {
+        success: false,
+        step: "2fa",
+        tempToken: data.tempToken,
+        message: data.message,
+    };
+    }
+
+    if (data.sessionToken) {
+      cookies().set({
+        name: "sessionToken",
+        value: data.sessionToken,
+        httpOnly: true,
+        secure: true,
+        path: "/",
+      });
+
+      return { success: true, response: response };
+    }
   }
 
-  return { success: false, message: response.message };
+  return { success: false, message: response.message || "Login failed" };
 };
 
 const isAxiosResponse = (

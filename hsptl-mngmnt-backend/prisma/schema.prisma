@@ -8,27 +8,33 @@ datasource db {
 }
 
 model Account {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  email      String       @unique
-  name       String?
-  password   String
-  role       Role         @default(STAFF)
-  cert       Certificate?
-  products   Product[]
-  orders     Orders[]
-  invoice    Invoice[]    @relation(fields: [invoice_id], references: [id])
-  invoice_id String[]     @db.ObjectId
-  vehicle    Vehicle[]
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  email       String       @unique
+  name        String?
+  password    String
+  document    String
+  contract    String
+  isVerfied   Boolean      @default(false)
+  role        Role         @default(STAFF)
+  cert        Certificate?
+  products    Product[]    @relation(fields: [products_id], references: [id])
+  products_id String[]     @db.ObjectId
+  orders      Orders[]     @relation(fields: [orders_id], references: [id])
+  orders_id   String[]     @db.ObjectId
+  invoice     Invoice[]    @relation(fields: [invoice_id], references: [id])
+  invoice_id  String[]     @db.ObjectId
+  vehicle     Vehicle[]    @relation(fields: [vehicle_id], references: [id])
+  vehicle_id  String[]     @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Orders {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   products     Json
-  account      Account?  @relation(fields: [account_id], references: [id])
+  account      Account[] @relation(fields: [account_id], references: [id])
+  account_id   String[]  @db.ObjectId
   destination  String
-  account_id   String?   @db.ObjectId
   shippment    Shipment? @relation(fields: [shippment_id], references: [id])
   shippment_id String?   @db.ObjectId
   createdAt    DateTime  @default(now())
@@ -63,14 +69,14 @@ model Certificate {
 }
 
 model Product {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   price      Float
   stocks     Int
-  account    Account? @relation(fields: [account_id], references: [id])
-  account_id String?  @db.ObjectId
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  account    Account[] @relation(fields: [account_id], references: [id])
+  account_id String[]  @db.ObjectId
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Vehicle {
@@ -79,14 +85,13 @@ model Vehicle {
   driver_name  String
   plate_no     String?
   status       VehicleStatus @default(AVAILABLE)
-  account      Account?      @relation(fields: [account_id], references: [id])
-  account_id   String?       @unique @db.ObjectId
+  account      Account[]     @relation(fields: [account_id], references: [id])
+  account_id   String[]      @unique @db.ObjectId
   shippment    Shipment?     @relation(fields: [shippment_id], references: [id])
   shippment_id String?       @unique @db.ObjectId
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
-
 
 model Invoice {
   id         String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -98,7 +103,6 @@ model Invoice {
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
 }
-
 
 enum InvoiceStatus {
   PENDING
@@ -122,4 +126,5 @@ enum CertStatus {
 enum Role {
   STAFF
   VENDOR
+  ADMIN
 }

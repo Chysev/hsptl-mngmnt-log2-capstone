@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { IsNotEmpty, IsString } from "class-validator";
 
 /**
@@ -26,6 +27,18 @@ class RegisterDTO {
   @IsString()
   @IsNotEmpty()
   email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  document: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contract: string;
+
+  @IsString()
+  @IsNotEmpty()
+  role: Role;
 
   @IsString()
   @IsNotEmpty()

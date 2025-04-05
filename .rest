@@ -30,3 +30,6 @@ GET http://localhost:4000/api/v1/shipment/list
 
 ###
 GET https://backend-finance.nodadogenhospital.com/billing/get-billings
+
+###
+GET http://localhost:5000/api/v1/users/prompt

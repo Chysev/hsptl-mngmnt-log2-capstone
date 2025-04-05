@@ -16,11 +16,23 @@ class AuthController extends Api {
     }
   };
 
+  public Verify2fa = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const auth = await this.authService.verify2fa(req, res);
+      this.send(res, auth, HttpStatusCode.Ok, "Login Route");
+    } catch (error) {
+      res.status(error.status).json({ message: error.message });
+    }
+  };
+
+
   public Register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const auth = await this.authService.register(req.body);
       this.send(res, auth, HttpStatusCode.Ok, "Register Route");
+      console.log(auth)
     } catch (error) {
+      console.log(error)
       next(new HttpInternalServerError("Failed to register"));
     }
   };

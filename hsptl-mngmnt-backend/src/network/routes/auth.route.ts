@@ -19,6 +19,12 @@ auth
     controller.Login
   );
 
+auth
+  .route("/verify2fa")
+  .post(
+    controller.Verify2fa
+  );
+
 
 auth
   .route("/register")

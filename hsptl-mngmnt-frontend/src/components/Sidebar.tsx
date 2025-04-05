@@ -1,11 +1,15 @@
 "use client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Package, Home, Users, Truck, FileText, BarChart3, Settings, ListOrdered } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { Package, Home, Users, Truck, FileText, BarChart3, Settings, ListOrdered, ListOrderedIcon, TruckIcon, Pill, ReceiptText, LayoutDashboard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import { useTokenContext } from "@/context/TokenProvider"
+import { UseQueryResult } from "@tanstack/react-query"
+import { User } from "@/types"
+import useUserData from "@/hooks/use-user-data"
 
 const Sidebar = () => {
     const pathname = usePathname()
@@ -13,6 +17,15 @@ const Sidebar = () => {
     const isActive = (path: string) => {
         return pathname === path
     }
+
+    const { sessionToken } = useTokenContext()
+    const router = useRouter();
+
+
+    const { data: user }: UseQueryResult<{ data: { user: User } }> = useUserData(
+        sessionToken,
+        router
+    );
 
     return (
         <div className="hidden border-r bg-muted/40 lg:block">
@@ -25,36 +38,95 @@ const Sidebar = () => {
                 </div>
                 <div className="flex-1 overflow-auto py-2">
                     <nav className="grid items-start px-4 text-sm font-medium">
+                        {["VENDOR", "ADMIN"].includes(user?.data.user.role as string) && (
+                            <Button
+                                variant={isActive("/dashboard") ? "secondary" : "ghost"}
+                                className="justify-start gap-3 px-3"
+                                asChild
+                            >
+                                <Link href="/dashboard">
+                                    <LayoutDashboard className="h-4 w-4" />
+                                    Dashboard
+                                </Link>
+                            </Button>
+                        )}
 
 
-                        <Button variant={isActive("/") ? "secondary" : "ghost"} className="justify-start gap-3 px-3" asChild>
+
+                        <Button variant={isActive("/dashboard/orders") ? "secondary" : "ghost"} className="justify-start gap-3 px-3" asChild>
                             <Link href="/dashboard/orders">
                                 <ListOrdered className="h-4 w-4" />
                                 Orders
                             </Link>
                         </Button>
 
+
+                        {["VENDOR", "ADMIN"].includes(user?.data.user.role as string) && (
+                            <Button
+                                variant={isActive("/dashboard/products") ? "secondary" : "ghost"}
+                                className="justify-start gap-3 px-3 mt-1"
+                                asChild
+                            >
+                                <Link href="/dashboard/products">
+                                    <Pill className="h-4 w-4" />
+                                    Products
+                                </Link>
+                            </Button>
+                        )}
+
+                        {["STAFF", "ADMIN"].includes(user?.data?.user?.role as string) && (
+                            <Button
+                                variant={isActive("/dashboard/budget") ? "secondary" : "ghost"}
+                                className="justify-start gap-3 px-3 mt-1"
+                                asChild
+                            >
+                                <Link href="/dashboard/budget">
+                                    <Pill className="h-4 w-4" />
+                                    Budget Request
+                                </Link>
+                            </Button>
+                        )}
+
+
+
+                        <Button
+                            variant={isActive("/dashboard/invoice") ? "secondary" : "ghost"}
+                            className="justify-start gap-3 px-3 mt-1"
+                            asChild
+                        >
+                            <Link href="/dashboard/invoice">
+                                <ReceiptText className="h-4 w-4" />
+                                Invoice
+                            </Link>
+                        </Button>
+
+
                         <Button
                             variant={isActive("/vendor") ? "secondary" : "ghost"}
                             className="justify-start gap-3 px-3 mt-1"
                             asChild
                         >
-                            <Link href="/dashboard/vendor">
-                                <Users className="h-4 w-4" />
-                                Vendor Portal
+                            <Link href="/dashboard/shipment">
+                                <TruckIcon className="h-4 w-4" />
+                                Shipment
                             </Link>
                         </Button>
-                        <Button
-                            variant={isActive("/vehicle") ? "secondary" : "ghost"}
-                            className="justify-start gap-3 px-3 mt-1"
-                            asChild
-                        >
-                            <Link href="/dashboard/vehicle">
-                                <Truck className="h-4 w-4" />
-                                Vehicle Reservation
-                                <Badge className="ml-auto flex h-5 w-5 items-center justify-center rounded-full">3</Badge>
-                            </Link>
-                        </Button>
+
+
+
+                        {["VENDOR", "ADMIN"].includes(user?.data.user.role as string) && (
+                            <Button
+                                variant={isActive("/vehicle") ? "secondary" : "ghost"}
+                                className="justify-start gap-3 px-3 mt-1"
+                                asChild
+                            >
+                                <Link href="/dashboard/vehicle">
+                                    <Truck className="h-4 w-4" />
+                                    Vehicle
+                                </Link>
+                            </Button>
+                        )}
+
 
                     </nav>
                 </div>

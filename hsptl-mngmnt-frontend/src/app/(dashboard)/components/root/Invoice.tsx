@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -50,7 +48,7 @@ type User = {
     role: "STAFF" | "VENDOR"
 }
 
-export default function OrdersPage() {
+export default function Invoice() {
     const [orders, setOrders] = useState<Order[]>([])
     const [products, setProducts] = useState<any[]>([])
     const [vendors, setVendors] = useState<any[]>([])
@@ -179,18 +177,11 @@ export default function OrdersPage() {
 
     return (
         <>
-            <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">Order Management</h1>
-            {["STAFF", "ADMIN"].includes(user?.data?.user?.role as string) && (
-                    <Button className="ml-auto" size="sm" onClick={() => setIsCreateOrderModalOpen(true)}>
-                        <Plus className="mr-2 h-4 w-4" /> Create Order
-                    </Button>
-                )}
-            </div>
+
 
             <Card className="mt-4">
                 <CardHeader>
-                    <CardTitle>Orders</CardTitle>
+                    <CardTitle>Invoice</CardTitle>
                     <CardDescription>Manage and view all purchase orders.</CardDescription>
                 </CardHeader>
                 <CardContent>
